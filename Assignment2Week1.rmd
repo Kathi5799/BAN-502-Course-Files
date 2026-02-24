@@ -1,0 +1,63 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+# Module 1 Assignment 2  
+## Matysuk,Kathi  
+
+```{r Import all the things}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(tidyr)
+InventoryData <- read_csv("InventoryData.csv")
+View(InventoryData)
+diamonddata = diamonds
+
+```
+```{r Q1}
+nrow(diamonddata)
+```
+```{r Q2}
+ncol(diamonds)
+```
+
+```{r q3}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point()
+```
+```{r q4}
+ggplot(diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_point()
+```
+
+```{r q5}
+ggplot(diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_point() +
+  facet_wrap(~ color)
+```
+```{r}
+mean(InventoryData$`On Hand`)
+```
+
+```{r}
+inventoryA <- filter(InventoryData, Supplier == "A")
+nrow(inventoryA)
+```
+```{r}
+inventoryA = mutate(
+  inventoryA,
+  OnHandRatio = `On Hand` / `Annual Demand`
+)
+ 
+```
+
+```{r}
+avg_cost <- inventoryA %>%
+  group_by(`Item SKU`) %>%
+  summarize(SKUAvgCost = mean(`Cost per Unit ($)`))
+
+```
+
